@@ -9,14 +9,17 @@ package model;
  */
 public class Sinner implements Runnable {
 	
+	Hell hell;
+	
 	public Sinner() {
 		Thread t = new Thread(this, "Sinner");
 		
+		hell = Hell.getInstance();
 		t.start();
 	}
 	
 	public void run() {
-		
+		hell.enter(this);
 	}
 	
 }

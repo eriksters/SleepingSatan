@@ -19,7 +19,7 @@ public class Hell {
 		ow = new Overworld();
 		satan = new Satan();
 		sinnerQueue = new LinkedList<>();
-		horsemen = new LinkedList<>();
+		horsemen = new LinkedList<>();  
 	}
 	
 	public static Hell getInstance() {
@@ -28,22 +28,33 @@ public class Hell {
 		return instance;
 	}
 	
-	public synchronized void enter(Sinner sinner) {
+	public void enter(Sinner sinner) {
 		sinnerQueue.add(sinner);	
 		System.out.println("Some fresh meat has arrived! Sinners in queue: " + sinnerQueue.size());
 	}
 	
-	public synchronized void enter(Horseman hm) {
+	public void enter(Horseman hm) {
 		horsemen.add(hm);
 		System.out.println("Horseman " + hm.getName() + " has arrived in hell.");
 		
 		if (satan.isSleeping() && horsemen.size() == 4) {
-			
+			try {
+				hm.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		
 	}
 	
-	private void bringOnTheApocalypse() {
+	public boolean allHorsemenAreHere() {
+		return horsemen.size() == 4 ? true : false;
+	}
+	
+	public Satan getSatan() {
+		return satan;
+	}
+	
+	public void bringOnTheApocalypse() {
 		horsemen.clear();
 		System.out.println("The Apocalypse is upon us!");
 	}
