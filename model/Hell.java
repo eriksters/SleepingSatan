@@ -28,6 +28,7 @@ public class Hell {
 		return instance;
 	}
 	
+
 	public void enter(Sinner sinner) {
 		sinnerQueue.add(sinner);	
 		System.out.println("Some fresh meat has arrived! Sinners in queue: " + sinnerQueue.size());
@@ -57,6 +58,7 @@ public class Hell {
 	public void bringOnTheApocalypse() {
 		horsemen.clear();
 		System.out.println("The Apocalypse is upon us!");
+
 	}
 	
 	private void whipAndAssign() {

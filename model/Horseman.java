@@ -12,6 +12,7 @@ public class Horseman implements Runnable {
 		
 		this.name = name;
 		this.horse = horse;
+
 		this.hell = Hell.getInstance();
 		
 		t.start();
@@ -27,6 +28,7 @@ public class Horseman implements Runnable {
 				e.printStackTrace();
 			}
 		}
+
 		
 	}
 	
