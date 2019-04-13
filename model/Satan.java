@@ -16,13 +16,19 @@ public class Satan implements Runnable {
 	private boolean isSleeping;
 	
 	public Satan() {
+		Thread t = new Thread(this, "Satan");
+		
 		isSleeping = true;
-
+		
+		t.start();
+		
 	}
 	
 	@Override
 	public void run() {
-		
+		while (true) {
+			
+		}
 	}
 
 	public void setSleeping(boolean b) {

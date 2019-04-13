@@ -15,9 +15,10 @@ public class Sinner implements Runnable {
 	Hell hell;
 	Satan satan;
 	Condition threeSinnersCondition;
+	Thread t;
 	
 	public Sinner(int num) {
-		Thread t = new Thread(this, "Sinner" + num);
+		t = new Thread(this, "Sinner" + num);
 		
 		hell = Hell.getInstance();
 		satan = hell.getSatan();
@@ -29,14 +30,20 @@ public class Sinner implements Runnable {
 	
 	public void run() {
 		hell.enter(this);
-		
 		while (!satan.isSleeping() || hell.allHorsemenAreHere()) {
 			try {
-				threeSinnersCondition.await();
+				synchronized (hell) {
+					threeSinnersCondition.await();
+					System.out.println("Continuing from three Sinnders condition");
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		} 	
+	}
+	
+	public String getName() {
+		return t.getName();
 	}
 	
 }

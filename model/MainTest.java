@@ -6,7 +6,7 @@ public class MainTest {
 		Hell h = Hell.getInstance();
 		Lamb l = new Lamb();
 		Overworld ow = new Overworld();
-		
+		//System.out.println("Generation done!");
 	}
 	
 }
