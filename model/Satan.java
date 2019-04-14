@@ -14,6 +14,7 @@ public class Satan implements Runnable {
 	
 
 	private boolean isSleeping;
+	private boolean isHelping;
 	
 	public Satan() {
 		Thread t = new Thread(this, "Satan");
@@ -35,8 +36,16 @@ public class Satan implements Runnable {
 		isSleeping = b;
 	}
 	
+	public void setHelping(boolean b) {
+		isHelping = b;
+	}
+	
 	public boolean isSleeping() {
 		return isSleeping;
 
+	}
+	
+	public boolean isHelping() {
+		return isHelping;
 	}
 }

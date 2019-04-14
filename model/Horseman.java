@@ -1,13 +1,17 @@
 package model;
 
 import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Horseman implements Runnable {
 	
 	private String name;
 	private String horse;
 	
-	private Condition fourHorsemenCondition;
+	private boolean canGo = false;
+	private Lock lock;
+	private Condition canGoCondition;
 	private Thread t;
 	
 	private Hell hell;
@@ -15,6 +19,8 @@ public class Horseman implements Runnable {
 	
 	public Horseman(String name, String horse) {
 		t = new Thread(this, name);
+		lock = new ReentrantLock();
+		canGoCondition = lock.newCondition();
 		
 		this.name = name;
 		this.horse = horse;
@@ -24,11 +30,21 @@ public class Horseman implements Runnable {
 	}
 	
 	public void run() {
-		hell.enter(this);
+		while(true) {
+			while (!canGo) {
+				try {
+					canGoCondition.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			hell.enter(this);
+		}
 	}
 	
 	public void goToHell() {
-		t.start();
+		canGo = true;
+		canGoCondition.signal();
 	}
 	
 	public String getName() {

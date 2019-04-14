@@ -26,7 +26,7 @@ public class Lamb implements Runnable {
 		while (true) {
 			if (scroll.isOpenable()) {
 				Horseman hm = scroll.openSeal();
-				hm.goToHell();
+				//hm.goToHell();
 				//System.out.println(hm.getName() + " rides on a " + hm.getHorse() + " horse.");
 				//hm.run();
 			}

@@ -51,15 +51,17 @@ public class Hell {
 		sinnerQueue.add(sinner);	
 		System.out.println(sinner.getName() + ": Some fresh meat has arrived! Sinners in queue: " + sinnerQueue.size());
 		while (allHorsemenAreHere() || !satan.isSleeping() || !threeSinnersAreHere()) {
+			System.out.println(sinner.getName() + " going to sleepy");
 			try {
 				wait();
+				System.out.println(sinner.getName() + " has been notified!");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 		System.out.println(sinner.getName() + " is bout to get whipped!");
-		whipAndAssign(sinner);
 		notifyAll();
+		whipAndAssign(sinner);
 	}
 	
 	public synchronized void enter(Horseman hm) {
