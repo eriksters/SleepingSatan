@@ -32,19 +32,23 @@ public class Horseman implements Runnable {
 	public void run() {
 		while(true) {
 			while (!canGo) {
-				try {
-					canGoCondition.await();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				synchronized (this) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			hell.enter(this);
+			System.out.println(t.getName() + " has gone to hell and is back!");
+			canGo = false;
 		}
 	}
 	
-	public void goToHell() {
+	public synchronized void goToHell() {
 		canGo = true;
-		canGoCondition.signal();
+		notify();
 	}
 	
 	public String getName() {

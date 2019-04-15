@@ -11,35 +11,52 @@ import java.util.concurrent.locks.Condition;
  */
 public class Sinner implements Runnable {
 	
-	int number;
-	Hell hell;
-	Satan satan;
-	Condition threeSinnersCondition;
-	Thread t;
+	private int circleNumber;
+	private Hell hell;
+	private Thread t;
+	private boolean canGo;
+	
 	
 	public Sinner(int num) {
 		t = new Thread(this, "Sinner" + num);
+		System.out.println("Sinner number " + num + " has been sent to the abyss!");
 		
 		hell = Hell.getInstance();
-		satan = hell.getSatan();
-		
-		threeSinnersCondition = hell.getThreeSinnersCondition();
+		circleNumber = 0;
 		
 		t.start();
 	}
 	
 	public void run() {
-		hell.enter(this);
-//		while (!satan.isSleeping() || hell.allHorsemenAreHere()) {
-//			try {
-//				synchronized (hell) {
-//					threeSinnersCondition.await();
-//					System.out.println("Continuing from three Sinnders condition");
-//				}
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
+//		synchronized (hell) {
+			hell.enter(this);
+//			while (!hell.threeSinnersAreHere()) {
+//				System.out.println(t.getName() + " waiting!");
+//				sleep();
 //			}
-//		} 	
+//		}
+	}
+	
+//	public synchronized void sleep() {
+//		while (circleNumber == 0) {
+//			while(!canGo) {
+//				try {
+//					wait();
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
+
+	public boolean canGo() {
+		return canGo;
+	}
+	
+	public void getWhipped() {
+		System.out.println(t.getName() + " has gotten a whooping!");
+		canGo = true;
+		circleNumber = 1;
 	}
 	
 	public String getName() {

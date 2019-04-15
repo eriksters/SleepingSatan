@@ -26,13 +26,10 @@ public class Lamb implements Runnable {
 		while (true) {
 			if (scroll.isOpenable()) {
 				Horseman hm = scroll.openSeal();
-				//hm.goToHell();
-				//System.out.println(hm.getName() + " rides on a " + hm.getHorse() + " horse.");
-				//hm.run();
+				hm.goToHell();
 			}
 			try {
 				long sleepTime = (long) ((Math.random() + 0.3) * 3000);
-				//System.out.println("Lamb is doing irresponsible things in " + sleepTime + " milliseconds!");
 				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

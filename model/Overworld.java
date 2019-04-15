@@ -8,7 +8,7 @@ package model;
  */
 public class Overworld implements Runnable {
 	
-	int count;
+	int count = 1;
 	Hell hell;
 	
 	public Overworld() {

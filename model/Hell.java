@@ -21,7 +21,7 @@ public class Hell {
 	private Queue<Horseman> horsemen;				//Raindeer
 	
 	private Hell() {
-		satan = new Satan();
+		satan = new Satan(this);
 		sinnerQueue = new LinkedList<>();
 		horsemen = new LinkedList<>(); 
 		
@@ -48,20 +48,23 @@ public class Hell {
 	
 
 	public synchronized void enter(Sinner sinner) {
-		sinnerQueue.add(sinner);	
-		System.out.println(sinner.getName() + ": Some fresh meat has arrived! Sinners in queue: " + sinnerQueue.size());
-		while (allHorsemenAreHere() || !satan.isSleeping() || !threeSinnersAreHere()) {
-			System.out.println(sinner.getName() + " going to sleepy");
-			try {
-				wait();
-				System.out.println(sinner.getName() + " has been notified!");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		sinnerQueue.add(sinner);
+		if (threeSinnersAreHere()) {
+			satan.wake();
+		}
+		while (!sinner.canGo()) {
+			synchronized (sinner) {
+					System.out.println("waiting in hell");
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 		}
-		System.out.println(sinner.getName() + " is bout to get whipped!");
-		notifyAll();
-		whipAndAssign(sinner);
+		//satan.wake();
+		System.out.println(sinner.getName() + ": Some fresh meat has arrived! Sinners in queue: " + sinnerQueue.size());
 	}
 	
 	public synchronized void enter(Horseman hm) {
@@ -74,8 +77,6 @@ public class Hell {
 				e.printStackTrace();
 			}
 		}
-		bringOnTheApocalypse(hm);
-		notifyAll();
 	}
 	
 //	public synchronized void check() {
@@ -103,24 +104,22 @@ public class Hell {
 		return satan;
 	}
 	
-	private void bringOnTheApocalypse(Horseman hm) {
-		satan.setSleeping(false);
-		System.out.println("The Apocalypse is upon us!");
-		horsemen.clear();
-		Scroll.getInstance().ret(hm);
-		satan.setSleeping(true);
+	public void bringOnTheApocalypse() {
+		for (int i = 0; i < 4; i++) {
+			Horseman hm = horsemen.poll();
+		}
 	}
 	
-	private void whipAndAssign(Sinner sinner) {
-		satan.setSleeping(false);
-		sinnerQueue.remove(sinner);
-		try {
-			Thread.sleep(120);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public synchronized void whipAndAssign() {
+		for (int i = 0; i < 3; i++) {
+			Sinner s = sinnerQueue.poll();
+			System.out.println(s.getName() + " has been chosen");
+			synchronized (s) {
+				System.out.println("Whipping " + s.getName());
+				s.getWhipped();
+				s.notify();
+			}
 		}
-		satan.setSleeping(true);
 	}
 	
 	
