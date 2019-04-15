@@ -110,14 +110,15 @@ public class Hell {
 		}
 	}
 	
-	public synchronized void whipAndAssign() {
+	public void whipAndAssign() {
 		for (int i = 0; i < 3; i++) {
 			Sinner s = sinnerQueue.poll();
 			System.out.println(s.getName() + " has been chosen");
+		
 			synchronized (s) {
 				System.out.println("Whipping " + s.getName());
-				s.getWhipped();
-				s.notify();
+				//getWhipped();
+				notify();
 			}
 		}
 	}

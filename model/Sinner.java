@@ -18,7 +18,7 @@ public class Sinner implements Runnable {
 	
 	
 	public Sinner(int num) {
-		t = new Thread(this, "Sinner" + num);
+		t = new Thread(this, "Sinner " + num);
 		System.out.println("Sinner number " + num + " has been sent to the abyss!");
 		
 		hell = Hell.getInstance();
@@ -26,6 +26,11 @@ public class Sinner implements Runnable {
 		
 		t.start();
 	}
+	
+	public Thread getThread() {
+		return t;
+	}
+	
 	
 	public void run() {
 //		synchronized (hell) {
@@ -53,10 +58,11 @@ public class Sinner implements Runnable {
 		return canGo;
 	}
 	
-	public void getWhipped() {
+	public synchronized void getWhipped() {
 		System.out.println(t.getName() + " has gotten a whooping!");
 		canGo = true;
 		circleNumber = 1;
+		notifyAll();
 	}
 	
 	public String getName() {
