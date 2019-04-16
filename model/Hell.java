@@ -13,23 +13,23 @@ public class Hell {
 	private HellCircle[] circles;
 	private Satan satan;							//Santa
 	
-	private Lock lock;
-	private Condition fourHorsemenCondition;
-	private Condition threeSinnersCondition;
+	private boolean wakeSatan = false;
+	private GatesOfHell goh;
+	
+//	private Lock lock;
+//	private Condition fourHorsemenCondition;
+//	private Condition threeSinnersCondition;
 	
 	private Queue<Sinner> sinnerQueue;				//Elves
-	private Queue<Horseman> horsemen;				//Raindeer
+//	private Queue<Horseman> horsemen;				//Raindeer
 	
 	private Hell() {
 		satan = new Satan(this);
 		sinnerQueue = new LinkedList<>();
-		horsemen = new LinkedList<>(); 
+//		horsemen = new LinkedList<>(); 
+		goh = new GatesOfHell(this);
 		
-		lock = new ReentrantLock();
-		
-		threeSinnersCondition = lock.newCondition();
-		fourHorsemenCondition = lock.newCondition();
-		
+		System.out.println("Hell generatedd");	
 	}
 	
 	public static Hell getInstance() {
@@ -38,39 +38,29 @@ public class Hell {
 		return instance;
 	}
 	
-	public Condition getThreeSinnersCondition() {
-		return threeSinnersCondition;
+	public GatesOfHell getGates() {
+		return goh;
 	}
 	
-	public Condition getFourHorsemenCondition() {
-		return fourHorsemenCondition;
-	}
+//	public Condition getThreeSinnersCondition() {
+//		return threeSinnersCondition;
+//	}
+//	
+//	public Condition getFourHorsemenCondition() {
+//		return fourHorsemenCondition;
+//	}
 	
 
 	public synchronized void enter(Sinner sinner) {
 		sinnerQueue.add(sinner);
+		System.out.println(sinner.getName() + " has arrived in the underworld!");
 		if (threeSinnersAreHere()) {
-			satan.wake();
+			System.out.println(sinner.getName() + " sees that their punishing hour has come!");
+			wakeSatan = true;
+			notifyAll();
 		}
 		while (!sinner.canGo()) {
-			synchronized (sinner) {
-					System.out.println("waiting in hell");
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-		}
-		//satan.wake();
-		System.out.println(sinner.getName() + ": Some fresh meat has arrived! Sinners in queue: " + sinnerQueue.size());
-	}
-	
-	public synchronized void enter(Horseman hm) {
-		horsemen.add(hm);
-		System.out.println("Horseman " + hm.getName() + " rides through the Hell's gates on a " + hm.getHorse() + " horse.");
-		while (!satan.isSleeping() || !allHorsemenAreHere()) {
+//			System.out.println(sinner.getName() + " waiting in hell");
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -79,22 +69,50 @@ public class Hell {
 		}
 	}
 	
-//	public synchronized void check() {
-//		System.out.println("Performing a nice check of hell!");
-//		if (satan.isSleeping() && allHorsemenAreHere()) {
-//			System.out.println("Bringing the apocalypse");
-//			satan.setSleeping(false);
-//			fourHorsemenCondition.signal();
-//		} else if (satan.isSleeping() && threeSinnersAreHere()) {
-//			System.out.println("Whipping some rapists and murderers!");
-//			satan.setSleeping(false);
-//			threeSinnersCondition.signal();
-//		}
-//	}
-	
-	public boolean allHorsemenAreHere() {
-		return horsemen.size() == 4 ? true : false;
+	public synchronized void enter(Satan satan) {
+		while (!wakeSatan) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Satan has been woken!");
+		
+		if (goh.allHere()) {
+			System.out.println("Satan sees that all 4 horsemen of the apocalypse have arrived in hell. He is pleased!");
+			goh.bringOnTheApocalypse();
+		} else if (threeSinnersAreHere()) {
+			System.out.println("Satan sees that 3 sinners have arrived and is pleased that he can get some exercise!");
+			whipAndAssign();
+		} else {
+			System.out.println("Satan sees that no condition has been met and is displeased that some programmer has fucked up!");
+		}
+		
+		wakeSatan = false;
 	}
+	
+	public synchronized void wakeSatan() {
+		wakeSatan = true;
+		notifyAll();
+	}
+	
+//	public synchronized void enter(Horseman hm) {
+//		horsemen.add(hm);
+//		System.out.println("Horseman " + hm.getName() + " rides through the Hell's gates on a " + hm.getHorse() + " horse.");
+//		if (allHorsemenAreHere()) {
+//			wakeSatan = true;
+//			notifyAll();
+//		}
+//		while (!canRaid) {
+//			try {
+//				wait();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println(hm.getName() + " has been released for the apocalypse");
+//	}
 	
 	public boolean threeSinnersAreHere() {
 		return sinnerQueue.size() >= 3 ? true : false;
@@ -104,23 +122,18 @@ public class Hell {
 		return satan;
 	}
 	
-	public void bringOnTheApocalypse() {
-		for (int i = 0; i < 4; i++) {
-			Horseman hm = horsemen.poll();
-		}
-	}
+//	public void bringOnTheApocalypse() {
+//		for (int i = 0; i < 4; i++) {
+//			Horseman hm = horsemen.poll();
+//		}
+//	}
 	
 	public void whipAndAssign() {
-		for (int i = 0; i < 3; i++) {
-			Sinner s = sinnerQueue.poll();
-			System.out.println(s.getName() + " has been chosen");
-		
-			synchronized (s) {
-				System.out.println("Whipping " + s.getName());
-				//getWhipped();
-				notify();
-			}
+		for (Sinner s : sinnerQueue) {
+			s.whip();
 		}
+		sinnerQueue.clear();
+		notifyAll();
 	}
 	
 	

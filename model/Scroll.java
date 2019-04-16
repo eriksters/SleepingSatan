@@ -43,7 +43,6 @@ public class Scroll {
 	} 
 	
 	public boolean isOpenable() {
-		System.err.println(currentCandidate);
 		return (currentCandidate < 4 ? true : false) && fullReset;
 	}
 	

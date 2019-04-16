@@ -33,36 +33,24 @@ public class Sinner implements Runnable {
 	
 	
 	public void run() {
-//		synchronized (hell) {
-			hell.enter(this);
-//			while (!hell.threeSinnersAreHere()) {
-//				System.out.println(t.getName() + " waiting!");
-//				sleep();
-//			}
-//		}
+		hell.enter(this);
+		System.out.println(t.getName() + " has come and gone!");
 	}
-	
-//	public synchronized void sleep() {
-//		while (circleNumber == 0) {
-//			while(!canGo) {
-//				try {
-//					wait();
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	}
 
 	public boolean canGo() {
 		return canGo;
 	}
 	
-	public synchronized void getWhipped() {
-		System.out.println(t.getName() + " has gotten a whooping!");
+	public void whip() {
+		try {
+			Thread.sleep((long) (Math.random() * 300));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		canGo = true;
 		circleNumber = 1;
-		notifyAll();
+		System.out.println(t.getName() + " has gotten a whooping and has been"
+				+ " assigned to circle " + circleNumber);
 	}
 	
 	public String getName() {

@@ -31,26 +31,7 @@ public class Satan implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			while (isSleeping) {
-				synchronized (this) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			System.out.println("Satan has been woken!");
-			
-			if (hell.allHorsemenAreHere()) {
-				System.out.println("Satan sees that all 4 horsemen of the apocalypse have arrived in hell. He is pleased!");
-				hell.bringOnTheApocalypse();
-			} else if (hell.threeSinnersAreHere()) {
-				System.out.println("Satan sees that 3 sinners have arrived and is pleased that he can get some exercise!");
-				hell.whipAndAssign();
-			} else {
-				System.out.println("Satan sees that no condition has been met and is displeased that some programmer has fucked up!");
-			}
+			hell.enter(this);
 		}
 	}
 	

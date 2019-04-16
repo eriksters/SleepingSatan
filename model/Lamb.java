@@ -11,12 +11,14 @@ public class Lamb implements Runnable {
 	
 	private Scroll scroll;
 	private Hell hell;
+	private GatesOfHell goh;
 	
 	public Lamb() {
 		Thread t = new Thread(this, "Jesus");
 		
 		hell = Hell.getInstance();
 		scroll = Scroll.getInstance();
+		goh = hell.getGates();
 		
 		t.start();
 	}
@@ -26,7 +28,9 @@ public class Lamb implements Runnable {
 		while (true) {
 			if (scroll.isOpenable()) {
 				Horseman hm = scroll.openSeal();
-				hm.goToHell();
+				System.err.println("About to release " + hm.getName());
+				hm.
+				goh.go();
 			}
 			try {
 				long sleepTime = (long) ((Math.random() + 0.3) * 3000);

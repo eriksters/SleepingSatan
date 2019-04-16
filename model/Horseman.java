@@ -10,45 +10,39 @@ public class Horseman implements Runnable {
 	private String horse;
 	
 	private boolean canGo = false;
-	private Lock lock;
-	private Condition canGoCondition;
+//	private Lock lock;
+//	private Condition canGoCondition;
 	private Thread t;
 	
 	private Hell hell;
-	private Satan satan;
+	private GatesOfHell goh;
 	
 	public Horseman(String name, String horse) {
 		t = new Thread(this, name);
-		lock = new ReentrantLock();
-		canGoCondition = lock.newCondition();
+//		lock = new ReentrantLock();
+//		canGoCondition = lock.newCondition();
 		
 		this.name = name;
 		this.horse = horse;
 
 		this.hell = Hell.getInstance();
-		this.satan = hell.getSatan();
+		goh = hell.getGates();
 	}
 	
 	public void run() {
 		while(true) {
-			while (!canGo) {
-				synchronized (this) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			hell.enter(this);
-			System.out.println(t.getName() + " has gone to hell and is back!");
+			System.err.println(getName() + " has received the order to gtfo");
+			goh.enter(this);
 			canGo = false;
 		}
 	}
 	
-	public synchronized void goToHell() {
-		canGo = true;
-		notify();
+	public boolean canGo() {
+		return canGo;
+	}
+	
+	public Thread getThread() {
+		return t;
 	}
 	
 	public String getName() {
