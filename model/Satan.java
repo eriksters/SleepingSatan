@@ -15,17 +15,12 @@ public class Satan implements Runnable {
 
 	private Hell hell;
 	
-	private boolean isSleeping;
-	private boolean isHelping;
-	
 	public Satan(Hell h) {
 		Thread t = new Thread(this, "Satan");
 		
 		hell = h;
-		isSleeping = true;
 		
 		t.start();
-		
 	}
 	
 	@Override
@@ -33,27 +28,5 @@ public class Satan implements Runnable {
 		while (true) {
 			hell.enter(this);
 		}
-	}
-	
-	public synchronized void wake() {
-		isSleeping = false;
-		notifyAll();
-	}
-
-	public void setSleeping(boolean b) {
-		isSleeping = b;
-	}
-	
-	public void setHelping(boolean b) {
-		isHelping = b;
-	}
-	
-	public boolean isSleeping() {
-		return isSleeping;
-
-	}
-	
-	public boolean isHelping() {
-		return isHelping;
 	}
 }

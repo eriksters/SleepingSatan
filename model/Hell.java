@@ -29,6 +29,8 @@ public class Hell {
 //		horsemen = new LinkedList<>(); 
 		goh = new GatesOfHell(this);
 		
+		
+		
 		System.out.println("Hell generatedd");	
 	}
 	
@@ -81,7 +83,7 @@ public class Hell {
 		
 		if (goh.allHere()) {
 			System.out.println("Satan sees that all 4 horsemen of the apocalypse have arrived in hell. He is pleased!");
-			goh.bringOnTheApocalypse();
+			goh.enter();
 		} else if (threeSinnersAreHere()) {
 			System.out.println("Satan sees that 3 sinners have arrived and is pleased that he can get some exercise!");
 			whipAndAssign();
@@ -93,8 +95,10 @@ public class Hell {
 	}
 	
 	public synchronized void wakeSatan() {
+		System.err.println(Thread.currentThread().getName() + " trying to wake Satan!");
 		wakeSatan = true;
 		notifyAll();
+		System.err.println(Thread.currentThread().getName() + " has woken Satan!");
 	}
 	
 //	public synchronized void enter(Horseman hm) {

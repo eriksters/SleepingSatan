@@ -10,14 +10,12 @@ public class Horseman implements Runnable {
 	private String horse;
 	
 	private boolean canGo = false;
-//	private Lock lock;
-//	private Condition canGoCondition;
 	private Thread t;
 	
 	private Hell hell;
 	private GatesOfHell goh;
 	
-	public Horseman(String name, String horse) {
+	public Horseman(String name, String horse, Scroll sc) {
 		t = new Thread(this, name);
 //		lock = new ReentrantLock();
 //		canGoCondition = lock.newCondition();
@@ -27,14 +25,19 @@ public class Horseman implements Runnable {
 
 		this.hell = Hell.getInstance();
 		goh = hell.getGates();
+		
+		t.start();
 	}
 	
 	public void run() {
 		while(true) {
-			System.err.println(getName() + " has received the order to gtfo");
-			goh.enter(this);
 			canGo = false;
+			goh.enter(this);
 		}
+	}
+	
+	public void setGo(boolean b) {
+		canGo = b;
 	}
 	
 	public boolean canGo() {
