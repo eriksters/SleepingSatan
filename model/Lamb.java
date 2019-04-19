@@ -29,7 +29,7 @@ public class Lamb implements Runnable {
 			if (scroll.isOpenable()) {
 				Horseman hm = scroll.openSeal();
 				hm.setGo(true);
-				goh.go();
+				goh.notifyAll();
 			}
 			try {
 				long sleepTime = (long) ((Math.random() + 0.3) * 3000);
