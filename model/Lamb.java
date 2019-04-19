@@ -26,16 +26,16 @@ public class Lamb implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			if (scroll.isOpenable()) {
-				Horseman hm = scroll.openSeal();
-				hm.setGo(true);
-				goh.notifyAll();
-			}
 			try {
 				long sleepTime = (long) ((Math.random() + 0.3) * 3000);
 				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			if (scroll.isOpenable()) {
+				Horseman hm = scroll.openSeal();
+				hm.setGo(true);
+				goh.go();
 			}
 		}
 		

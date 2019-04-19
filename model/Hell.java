@@ -81,7 +81,7 @@ public class Hell {
 		}
 		System.out.println("Satan has been woken!");
 		
-		if (goh.allHere()) {
+		if (goh.getWaitCondition() == WaitCondition.ALL_HORSEMEN_HERE) {
 			System.out.println("Satan sees that all 4 horsemen of the apocalypse have arrived in hell. He is pleased!");
 			goh.enter();
 		} else if (threeSinnersAreHere()) {

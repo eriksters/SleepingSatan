@@ -34,20 +34,19 @@ public class Scroll {
 		return instance;
 	}
 	
-	public void ret(Horseman hm) {
-		currentCandidate--;
-		System.err.println(hm.getName() + " returns to the depths that he came from! Current cand: " + currentCandidate);
-		if (currentCandidate == 0) 
-			fullReset = true;
-		System.err.println("Is openable: " + isOpenable());
-	} 
+	public  synchronized void reset() {
+		for (Horseman hm : horsemen) {
+			hm.setGo(false);
+		}
+		currentCandidate = 0;
+		fullReset = true;
+	}
 	
 	public boolean isOpenable() {
 		return (currentCandidate < 4 ? true : false) && fullReset;
 	}
 	
 	public Horseman openSeal() {
-//		int hmNumber = currentCandidate;
 		int cc = currentCandidate;
 		currentCandidate++;
 		if (currentCandidate == 4) {
