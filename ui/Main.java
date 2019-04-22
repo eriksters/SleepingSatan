@@ -37,6 +37,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import java.awt.Toolkit;
 
 public class Main extends JFrame {
 
@@ -76,6 +77,8 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	private Main() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/resources/icon_32.png")));
+		setTitle("Sleeping Satan's monitor");
 		instance = this;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

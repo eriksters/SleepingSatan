@@ -21,8 +21,8 @@ public class SatanPanel extends JPanel{
     
     public SatanPanel() {
        try {                
-          satanImage = ImageIO.read(new File("./resources/satan.png"));
-          blankImage = ImageIO.read(new File("./resources/blank.png"));
+          satanImage = ImageIO.read(new File("resources/satan.png"));
+          blankImage = ImageIO.read(new File("resources/blank.png"));
           
        } catch (IOException ex) {
             System.err.println("The image fucked up. Oops");
