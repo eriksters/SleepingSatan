@@ -12,7 +12,10 @@ public class Scroll {
 	private Scroll() {
 		currentCandidate = 0;
 		horsemen = new Horseman[4];
-		
+		generateHorsemen();
+	}
+	
+	public void generateHorsemen() {
 		Horseman conquest = new Horseman("Conquest", "white", this);
 		horsemen[0] = conquest;
 		
@@ -51,7 +54,6 @@ public class Scroll {
 		currentCandidate++;
 		if (currentCandidate == 4) {
 			fullReset = false;
-			System.err.println("Setting fullReset to false");
 		}
 		return horsemen[cc];
 	}

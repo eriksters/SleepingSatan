@@ -12,15 +12,22 @@ package model;
 
 public class Satan implements Runnable {
 	
-
+	private static Satan instance;
 	private Hell hell;
 	
-	public Satan(Hell h) {
+	private Satan() {
 		Thread t = new Thread(this, "Satan");
 		
-		hell = h;
+		hell = Hell.getInstance();
 		
 		t.start();
+	}
+	
+	public static Satan getInstance() {
+		if (instance == null)
+			instance = new Satan();
+		
+		return instance;
 	}
 	
 	@Override

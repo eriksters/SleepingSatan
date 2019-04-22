@@ -24,7 +24,7 @@ public class Horseman implements Runnable {
 		this.horse = horse;
 
 		this.hell = Hell.getInstance();
-		goh = hell.getGates();
+		goh = GatesOfHell.getInstance();
 		
 		t.start();
 	}

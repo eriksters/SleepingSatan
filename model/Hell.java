@@ -6,32 +6,26 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import ui.Buffer;
+import ui.LocationUpdate;
+
 public class Hell {
 	
 	private static Hell instance;
 	
 	private HellCircle[] circles;
-	private Satan satan;							//Santa
 	
 	private boolean wakeSatan = false;
 	private GatesOfHell goh;
-	
-//	private Lock lock;
-//	private Condition fourHorsemenCondition;
-//	private Condition threeSinnersCondition;
+	private Buffer buffer;
 	
 	private Queue<Sinner> sinnerQueue;				//Elves
 //	private Queue<Horseman> horsemen;				//Raindeer
 	
 	private Hell() {
-		satan = new Satan(this);
+		buffer = Buffer.getInstance();
 		sinnerQueue = new LinkedList<>();
-//		horsemen = new LinkedList<>(); 
-		goh = new GatesOfHell(this);
-		
-		
-		
-		System.out.println("Hell generatedd");	
+		goh = GatesOfHell.getInstance();
 	}
 	
 	public static Hell getInstance() {
@@ -39,19 +33,6 @@ public class Hell {
 			instance = new Hell();
 		return instance;
 	}
-	
-	public GatesOfHell getGates() {
-		return goh;
-	}
-	
-//	public Condition getThreeSinnersCondition() {
-//		return threeSinnersCondition;
-//	}
-//	
-//	public Condition getFourHorsemenCondition() {
-//		return fourHorsemenCondition;
-//	}
-	
 
 	public synchronized void enter(Sinner sinner) {
 		sinnerQueue.add(sinner);
@@ -62,7 +43,6 @@ public class Hell {
 			notifyAll();
 		}
 		while (!sinner.canGo()) {
-//			System.out.println(sinner.getName() + " waiting in hell");
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -74,6 +54,7 @@ public class Hell {
 	public synchronized void enter(Satan satan) {
 		while (!wakeSatan) {
 			try {
+				buffer.add(new LocationUpdate(LocationUpdate.IN_BED));
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -95,49 +76,32 @@ public class Hell {
 	}
 	
 	public synchronized void wakeSatan() {
-		System.err.println(Thread.currentThread().getName() + " trying to wake Satan!");
+		System.out.println(Thread.currentThread().getName() + " trying to wake Satan!");
 		wakeSatan = true;
 		notifyAll();
-		System.err.println(Thread.currentThread().getName() + " has woken Satan!");
+		System.out.println(Thread.currentThread().getName() + " has woken Satan!");
 	}
-	
-//	public synchronized void enter(Horseman hm) {
-//		horsemen.add(hm);
-//		System.out.println("Horseman " + hm.getName() + " rides through the Hell's gates on a " + hm.getHorse() + " horse.");
-//		if (allHorsemenAreHere()) {
-//			wakeSatan = true;
-//			notifyAll();
-//		}
-//		while (!canRaid) {
-//			try {
-//				wait();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		System.out.println(hm.getName() + " has been released for the apocalypse");
-//	}
 	
 	public boolean threeSinnersAreHere() {
 		return sinnerQueue.size() >= 3 ? true : false;
 	}
 	
-	public Satan getSatan() {
-		return satan;
-	}
-	
-//	public void bringOnTheApocalypse() {
-//		for (int i = 0; i < 4; i++) {
-//			Horseman hm = horsemen.poll();
-//		}
-//	}
-	
 	public void whipAndAssign() {
+		buffer.add(new LocationUpdate(LocationUpdate.IN_HELL));
 		for (Sinner s : sinnerQueue) {
+			try {
+				Thread.sleep(Settings.getSinnerTime());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			s.whip();
 		}
 		sinnerQueue.clear();
 		notifyAll();
+	}
+	
+	public void reset() {
+		instance = null;
 	}
 	
 	

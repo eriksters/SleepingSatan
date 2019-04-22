@@ -15,8 +15,6 @@ public class Overworld implements Runnable {
 		Thread t = new Thread(this, "Overworld");
 		hell = Hell.getInstance();
 		
-		System.out.println("Das lord has made das overworld!");
-		
 		t.start();
 	}
 	
@@ -25,7 +23,7 @@ public class Overworld implements Runnable {
 		while (true) {
 			new Sinner(count);
 			try {
-				long sleepTime = (long) (Math.random() * 1000);
+				long sleepTime = (long) ((1 + Math.random()) / 2 * Settings.getSinnerRate());
 				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

@@ -2,6 +2,9 @@ package model;
 
 import java.util.concurrent.locks.Condition;
 
+import ui.Buffer;
+import ui.SinnerUpdate;
+
 /**
  * When 3 sinners have arrived, Satan needs to whip them and send them
  * to their appropriate places. 
@@ -15,7 +18,7 @@ public class Sinner implements Runnable {
 	private Hell hell;
 	private Thread t;
 	private boolean canGo;
-	
+	private Buffer buffer;
 	
 	public Sinner(int num) {
 		t = new Thread(this, "Sinner " + num);
@@ -23,6 +26,8 @@ public class Sinner implements Runnable {
 		
 		hell = Hell.getInstance();
 		circleNumber = 0;
+		
+		buffer = Buffer.getInstance();
 		
 		t.start();
 	}
@@ -33,8 +38,9 @@ public class Sinner implements Runnable {
 	
 	
 	public void run() {
+		buffer.add(new SinnerUpdate(this, circleNumber));
 		hell.enter(this);
-		System.out.println(t.getName() + " has come and gone!");
+		buffer.add(new SinnerUpdate(this, circleNumber));
 	}
 
 	public boolean canGo() {
@@ -53,7 +59,15 @@ public class Sinner implements Runnable {
 				+ " assigned to circle " + circleNumber);
 	}
 	
+	public int getNumber() {
+		return circleNumber;
+	}
+	
 	public String getName() {
+		return t.getName();
+	}
+	
+	public String toString() {
 		return t.getName();
 	}
 	

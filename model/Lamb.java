@@ -10,15 +10,13 @@ package model;
 public class Lamb implements Runnable {
 	
 	private Scroll scroll;
-	private Hell hell;
 	private GatesOfHell goh;
 	
 	public Lamb() {
 		Thread t = new Thread(this, "Jesus");
 		
-		hell = Hell.getInstance();
 		scroll = Scroll.getInstance();
-		goh = hell.getGates();
+		goh = GatesOfHell.getInstance();
 		
 		t.start();
 	}
@@ -27,7 +25,7 @@ public class Lamb implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				long sleepTime = (long) ((Math.random() + 0.3) * 3000);
+				long sleepTime = (long) ((1 + Math.random()) / 2 *  Settings.getHorsemenRate());
 				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
