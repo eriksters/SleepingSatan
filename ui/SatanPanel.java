@@ -1,8 +1,6 @@
 package ui;
 
-import java.awt.AlphaComposite;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +19,8 @@ public class SatanPanel extends JPanel{
     
     public SatanPanel() {
        try {                
-          satanImage = ImageIO.read(new File("resources/satan.png"));
-          blankImage = ImageIO.read(new File("resources/blank.png"));
+          satanImage = ImageIO.read(new File(getClass().getResource("/resources/satan.png").getFile()));
+          blankImage = ImageIO.read(new File(getClass().getResource("/resources/blank.png").getFile()));
           
        } catch (IOException ex) {
             System.err.println("The image fucked up. Oops");
