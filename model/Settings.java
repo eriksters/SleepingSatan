@@ -1,15 +1,24 @@
 package model;
 
+/**
+ * Class for storing all timing settings 
+ * (Probably not the correct to do this but it works for now)
+ * 
+ * @author eriks
+ *
+ */
 public class Settings {
 	
-	private static long sinnerRate = 2000;
+	private static double multiplier = 1;
+	
+	private static long sinnerRate = 3000;
 	private static long horsemenRate = 4000;
 	
-	private static long sinnerTime = 300;
+	private static long sinnerTime = 400;
 	private static long apocalyposeLength = 5000;
 	
 	public static long getSinnerRate() {
-		return sinnerRate;
+		return (long) (sinnerRate * multiplier);
 	}
 	
 	public static void setSinnerRate(long sinnerRate) {
@@ -17,7 +26,7 @@ public class Settings {
 	}
 	
 	public static long getSinnerTime() {
-		return sinnerTime;
+		return (long) (sinnerTime * multiplier);
 	}
 	
 	public static void setSinnerTime(long sinnerTime) {
@@ -25,7 +34,7 @@ public class Settings {
 	}
 	
 	public static long getHorsemenRate() {
-		return horsemenRate;
+		return (long) (horsemenRate * multiplier);
 	}
 	
 	public static void setHorsemenRate(long horsemenRate) {
@@ -33,15 +42,10 @@ public class Settings {
 	}
 	
 	public static long getApocalyposeLength() {
-		return apocalyposeLength;
+		return (long) (apocalyposeLength * multiplier);
 	}
 	
 	public static void setApocalyposeLength(long apocalyposeLength) {
 		Settings.apocalyposeLength = apocalyposeLength;
 	}
-
-	
-	
-	
-	
 }

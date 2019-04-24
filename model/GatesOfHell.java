@@ -8,6 +8,14 @@ import ui.Buffer;
 import ui.HorsemanUpdate;
 import ui.LocationUpdate;
 
+/**
+ * Gates of hell is where all the Horsemen of the apocalypse meet up and once they are all here, the last one wakes satan who is sleeping in
+ * is Hell. 
+ * Enums are used for storing the state of the apocalypse (See model.WaitCondition.java).
+ * 
+ * @author eriks
+ *
+ */
 public class GatesOfHell {
 	private Hell hell;
 	private Scroll scr;

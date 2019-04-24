@@ -1,8 +1,7 @@
 package model;
 
 /**
- * The lamb opens the seals on the scroll every once in a while.
- * Every opened seal spawns a horseman
+ * Please refer to https://www.biblegateway.com/passage/?search=Revelation+6&version=NIV
  * 
  * @author Eriks Petersons
  *

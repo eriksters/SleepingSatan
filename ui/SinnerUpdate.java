@@ -6,6 +6,12 @@ import javax.swing.JList;
 
 import model.Sinner;
 
+/**
+ * A GUI update for sinners
+ * 
+ * @author eriks
+ *
+ */
 public class SinnerUpdate extends UiUpdate{
 	
 	private Sinner sinner;

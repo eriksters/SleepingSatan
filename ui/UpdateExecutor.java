@@ -1,5 +1,12 @@
 package ui;
 
+
+/**
+ * Class/Thread for executing GUI updates.
+ * 
+ * @author eriks
+ *
+ */
 public class UpdateExecutor implements Runnable{
 
 	Buffer buffer;

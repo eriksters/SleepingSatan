@@ -8,6 +8,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * Panels where Satan is displayed. Changes between 2 images.
+ * 
+ * @author eriks
+ *
+ */
 public class SatanPanel extends JPanel{
 
     private BufferedImage satanImage;

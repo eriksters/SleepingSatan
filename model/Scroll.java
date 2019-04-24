@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Please refer to https://www.biblegateway.com/passage/?search=Revelation+6&version=NIV
+ * 
+ * @author eriks
+ *
+ */
 public class Scroll {
 	
 	private Horseman[] horsemen;

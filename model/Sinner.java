@@ -40,7 +40,6 @@ public class Sinner implements Runnable {
 	public void run() {
 		buffer.add(new SinnerUpdate(this, circleNumber));
 		hell.enter(this);
-		buffer.add(new SinnerUpdate(this, circleNumber));
 	}
 
 	public boolean canGo() {
@@ -49,7 +48,7 @@ public class Sinner implements Runnable {
 	
 	public void whip() {
 		try {
-			Thread.sleep((long) (Math.random() * 300));
+			Thread.sleep((long) (Settings.getSinnerTime()));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

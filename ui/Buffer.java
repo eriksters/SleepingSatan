@@ -3,6 +3,13 @@ package ui;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * A buffer that employs a queue. Since the point of the GUI running in a sepperate thread is to minimize time the sinner, Satan and Horsemen threads have to
+ * spend on the GUI, a circular buffer can not be used because it would cause slow downs when the threads need to wait a spot to be cleared.
+ * 
+ * @author eriks
+ *
+ */
 public class Buffer {
 	
 	private Queue<UiUpdate> q;

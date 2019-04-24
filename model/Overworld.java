@@ -1,7 +1,7 @@
 package model;
 
 /**
- * The overworld spawns sinners with a random level of sin
+ * The overworld spawns sinners
  * 
  * @author Eriks Petersons
  *

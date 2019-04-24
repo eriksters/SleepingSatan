@@ -8,7 +8,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import ui.Buffer;
 import ui.LocationUpdate;
+import ui.SinnerUpdate;
 
+/**
+ * Hell is where the sinners arrive when they die. Satan also waits here.
+ * 
+ * @author eriks
+ *
+ */
 public class Hell {
 	
 	private static Hell instance;
@@ -82,7 +89,7 @@ public class Hell {
 		System.out.println(Thread.currentThread().getName() + " has woken Satan!");
 	}
 	
-	public boolean threeSinnersAreHere() {
+	public synchronized boolean threeSinnersAreHere() {
 		return sinnerQueue.size() >= 3 ? true : false;
 	}
 	
@@ -95,6 +102,7 @@ public class Hell {
 				e.printStackTrace();
 			}
 			s.whip();
+			buffer.add(new SinnerUpdate(s, s.getNumber()));
 		}
 		sinnerQueue.clear();
 		notifyAll();
