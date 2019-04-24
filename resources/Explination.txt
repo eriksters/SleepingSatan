@@ -1,0 +1,18 @@
+// definitions from https://austingwalters.com/multithreading-common-pitfalls/
+
+Race conditions (Events that need to happen in order happen out of order): 
+Horsemen threads:
+	Race condition is avoided by allowing the Horsemen advance to the next stage of execution only when Satan advances the waitCond field to a state that the Horsemen are waiting for in the GatesOfHell instance and the Satan thread can only advance once the horsemen advanced the waitCond to a state that Satan is waiting for. After an advance has happened, the thread that changed it notifies all and starts waiting, giving up the monitor.
+Sinner threads:
+	Race condition is avoided by sinners first waiting for Satan to signal to them that they have gotten whipped and assigned to a circle of hell (which is signaled to Satan by a sinner). (This sounds pretty grusome for a project that's supposed to be about Santa giving out presents and helping elves). 
+
+Deadlock (Two threads are waiting for each other to finish, allowing neither to finish):
+	Since there is only one "resource" (the Satan thread), it is not possible for two threads to be waiting for each other to give up a resource.
+
+Starvation (a thread never gains accesses to resources):
+	The only place where this is a risk is when sinners are waiting to enter the hell synchronized block. But since the the sinners can only get added to the queue once once Satan is done whipping or raiding and the apocalypse can not take longer than the set amount of time, there is no way for the monitor to not get opened.
+
+Livelock (Two threads are dependent on each other's signals and both threads respond to each other's signals):
+	All threads that need to execute one after another, execute in a synchronized block. Refer to Race Conditions for explination on how scheduling is handled.
+
+Project by Eriks Petersons, Martinus Nel, Svetoslav Spasov, Benedict Marien, Zoltan Fodor
